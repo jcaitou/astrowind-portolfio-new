@@ -2,6 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 500;
+  }
+  .nav-link {
+    @apply pb-1;
+    color: rgb(212 196 247 / 1);
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.15s;
+    position: relative;
+  }
+  .nav-link:hover {
+    color: rgb(239 238 234 / 1);
+  }
+  .nav-link:after,
+  .hover-link:after {
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    width: 100%;
+    background-color: rgb(239 238 234 / 1);
+    content: '';
+    transform: scaleX(0);
+    transform-origin: 0;
+    height: 2px;
+    transition: 0.35s transform;
+  }
+  .nav-link:hover:after,
+  .hover-link:hover:after {
+    transform: scale(1);
+  }
+}
+
 @layer utilities {
   .bg-page {
     background-color: var(--aw-color-bg-page);
@@ -12,6 +51,57 @@
   .bg-light {
     background-color: var(--aw-color-bg-page);
   }
+  .bg-hero {
+    background-size: 200%;
+    background: linear-gradient(
+      -54deg,
+      var(--aw-color-bg-page) -23%,
+      var(--aw-color-bg-page-20),
+      var(--aw-color-bg-page) 51%
+    );
+    animation: presentation 3s linear forwards;
+  }
+
+  @keyframes presentation {
+    0% {
+      background-size: 200%;
+    }
+    50% {
+      background-position: 70%;
+    }
+    100% {
+      background-size: 100%;
+    }
+  }
+
+  .bg-hero:after {
+    content: '';
+    position: absolute;
+    height: 6rem;
+    width: 100%;
+    background: linear-gradient(0deg, var(--aw-color-bg-page), #0000);
+    bottom: 0;
+  }
+
+  .gradient-1 {
+    background: radial-gradient(circle farthest-corner at center center, #94fff0 0%, #c07fe5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .gradient-2 {
+    background: linear-gradient(225deg, #94fff0 0%, #c07fe5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .gradient-1::selection,
+  .gradient-2::selection {
+    background-color: lavender;
+    -webkit-text-fill-color: black;
+    color: black;
+  }
+
   .text-page {
     color: var(--aw-color-text-page);
   }
@@ -26,7 +116,41 @@
   }
 
   .btn-primary {
-    @apply btn font-semibold bg-primary text-white border-primary hover:bg-secondary hover:border-secondary hover:text-white dark:text-white dark:bg-primary dark:border-primary dark:hover:border-secondary dark:hover:bg-secondary;
+    @apply gradient-scroll relative overflow-hidden btn font-semibold bg-primary text-white border-primary hover:bg-secondary hover:border-secondary hover:text-white;
+  }
+  .gradient-scroll > span {
+    @apply z-10;
+  }
+  .gradient-scroll::before {
+    content: '';
+    display: block;
+    background: linear-gradient(242deg, #7ae4c9, #c37ae4);
+    background-size: 150% 150%;
+    -webkit-animation: gradientScrollAnimation 6s ease infinite;
+    -moz-animation: gradientScrollAnimation 6s ease infinite;
+    animation: gradientScrollAnimation 6s ease infinite;
+    width: 0;
+    height: 101%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.5s;
+  }
+  .gradient-scroll:hover::before {
+    width: 101%;
+    left: 0%;
+  }
+
+  @keyframes gradientScrollAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
   .btn-secondary {
@@ -39,14 +163,14 @@
 }
 
 #header.scroll > div:first-child {
-  @apply bg-page md:bg-white/90 md:backdrop-blur-md;
+  @apply md:backdrop-blur-md p-8;
   box-shadow: 0 0.375rem 1.5rem 0 rgb(140 152 164 / 13%);
 }
-.dark #header.scroll > div:first-child,
+/* .dark #header.scroll > div:first-child,
 #header.scroll.dark > div:first-child {
   @apply bg-page md:bg-[#030621e6] border-b border-gray-500/20;
   box-shadow: none;
-}
+} */
 /* #header.scroll > div:last-child {
   @apply py-3;
 } */

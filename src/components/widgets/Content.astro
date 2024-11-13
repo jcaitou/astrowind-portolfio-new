@@ -17,12 +17,20 @@ const {
   image = await Astro.slots.render('image'),
   isReversed = false,
   isAfterContent = false,
+  imageWidth = '1/2',
 
   id,
   isDark = false,
   classes = {},
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+var textWidthClass = 'md:basis-1/2';
+var imageWidthClass = 'md:basis-1/2';
+if (imageWidth == '2/5') {
+  textWidthClass = 'md:basis-3/5';
+  imageWidthClass = 'md:basis-2/5';
+}
 ---
 
 <WidgetWrapper
@@ -41,15 +49,15 @@ const {
       subtitle: 'max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400',
     }}
   />
-  <div class="mx-auto max-w-7xl p-4 md:px-8">
+  <div class='mx-auto max-w-7xl p-4 md:px-8'>
     <div class={`md:flex ${isReversed ? 'md:flex-row-reverse' : ''} md:gap-16`}>
-      <div class="md:basis-1/2 self-center">
-        {content && <div class="mb-12 text-lg dark:text-slate-400" set:html={content} />}
+      <div class={`${textWidthClass} self-center`}>
+        {content && <div class='mb-12 text-lg dark:text-slate-400' set:html={content} />}
 
         {
           callToAction && (
-            <div class="mt-[-40px] mb-8 text-primary">
-              <Button variant="link" {...callToAction} />
+            <div class='mt-[-40px] mb-8 text-primary'>
+              <Button variant='link' {...callToAction} />
             </div>
           )
         }
@@ -57,7 +65,7 @@ const {
         <ItemGrid
           items={items}
           columns={columns}
-          defaultIcon="tabler:check"
+          defaultIcon='tabler:check'
           classes={{
             container: `gap-y-4 md:gap-y-8`,
             panel: 'max-w-none',
@@ -68,20 +76,20 @@ const {
           }}
         />
       </div>
-      <div aria-hidden="true" class="mt-10 md:mt-0 md:basis-1/2">
+      <div aria-hidden='true' class={`${imageWidthClass} mt-10 md:mt-0`}>
         {
           image && (
-            <div class="relative m-auto max-w-4xl">
+            <div class='relative m-auto max-w-4xl'>
               {typeof image === 'string' ? (
                 <Fragment set:html={image} />
               ) : (
                 <Image
-                  class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg"
+                  class='mx-auto w-full rounded-lg bg-gray-500 shadow-lg'
                   width={500}
                   height={500}
                   widths={[400, 768]}
-                  sizes="(max-width: 768px) 100vw, 432px"
-                  layout="responsive"
+                  sizes='(max-width: 768px) 100vw, 432px'
+                  layout='responsive'
                   {...image}
                 />
               )}

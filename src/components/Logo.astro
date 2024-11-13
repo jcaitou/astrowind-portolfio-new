@@ -1,9 +1,20 @@
 ---
 import { SITE } from 'astrowind:config';
+import Image from '~/components/common/Image.astro';
 ---
 
 <span
-  class="self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white"
+  class='self-center ml-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-xl font-medium gradient-2 whitespace-nowrap inline-flex justify-center items-center gap-2'
 >
-  🚀 {SITE?.name}
+  <Image
+    class='mx-auto max-w-[40px] rounded-full bg-gray-500 shadow-lg'
+    width={40}
+    height={40}
+    widths={[400, 768]}
+    sizes='(max-width: 768px) 80px, 40px'
+    layout='responsive'
+    src='~/assets/images/jasmine-avatar.png'
+    alt="Jasmine Choi's avatar"
+  />
+  {SITE?.name}
 </span>

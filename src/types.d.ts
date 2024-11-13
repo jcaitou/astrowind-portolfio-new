@@ -277,6 +277,7 @@ export interface Content extends Omit<Headline, 'classes'>, Widget {
   content?: string;
   image?: string | unknown;
   items?: Array<Item>;
+  imageWidth?: string;
   columns?: number;
   isReversed?: boolean;
   isAfterContent?: boolean;
